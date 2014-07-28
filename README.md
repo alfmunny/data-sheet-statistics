@@ -19,7 +19,7 @@ Two data sheets will be created in current folder: `wacom_data.txt`, `tablet_dat
 
 Then run `statistics.sh` to generate the statisitics for each writer
 
-./statistics.sh
+	./statistics.sh
 
 ## Description of data sheet
 
