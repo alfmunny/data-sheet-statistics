@@ -51,4 +51,4 @@ for lable in $all_labels
 	done
 
 # finish
-echo '√ Complete! ./'$INFO' is gererated. √'
+echo '√ Complete! '$INFO' is gererated. √'

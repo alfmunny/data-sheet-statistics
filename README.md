@@ -57,7 +57,7 @@ And amount of each type of file per writer.
 **NOTE**: the numbers are not presented as the words' amount, but for the files
 which contain the corresponding words.
 
-Statistics example:
+Statistics example for writers:
 
 ```
 # Writer_name_1:	7
@@ -81,6 +81,20 @@ Statistics example:
   ...
   ...
 ```
+Statistics example for writers:
+
+# Eima:	6
+
+	|--Writer_1 2
+	|--Writer_2 4
+
+---
+# Eimer:	7
+
+	|--Writer_1 1
+	|--Writer_2 5
+	|--Writer_3 1
+
 
 ## TODO
 
@@ -88,4 +102,3 @@ Statistics example:
 to the recording content(see tablet_data.txt, labels are some other sentences),
 it's now not possible to generate the statistics of the tablet recordings
 
-2. A script to generate statistics according to each word.
