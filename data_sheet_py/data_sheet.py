@@ -11,11 +11,13 @@ from statistic import Statistic
 #SRC_DIR = '/Users/alfmunny/lernstift.data/WacomRecordings'
 
 SRC_DIR = sys.argv[1]
+WACOM_DIR = SRC_DIR + '/WacomRecordings'
+print(WACOM_DIR)
 
 # data sheet's destination
 W_STAT = 'writer_statistics.md'
 
-s = Statistic(SRC_DIR)
+s = Statistic(WACOM_DIR)
 printer = Printer(s)
 
 print("! Generating the data sheet, please do not interrupt !")

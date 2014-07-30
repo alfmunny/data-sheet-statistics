@@ -11,7 +11,7 @@ Direct to the `data_sheet_py` folder. Run the `data_sheet_py` with the data path
 
 Now it's only for Wacom data
 
-    python data_sheet_py path/to/wacom_data/
+    python data_sheet_py master/branch/to/lernstift.data
 
 A `writer_statistics.md` is to be created.
 
