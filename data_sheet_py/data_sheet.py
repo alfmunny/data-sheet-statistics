@@ -3,23 +3,34 @@ import sys
 import json
 import os
 import collections
-sys.path.append('./lib')
-from printer import Printer 
-from statistic import Statistic
+from lib.printer import Printer 
+from lib.statistic import Statistic
+from lib.writer import Writer
 
-# test root
-#SRC_DIR = '/Users/alfmunny/lernstift.data/WacomRecordings'
+# Test root
+# SRC_DIR = '/Users/alfmunny/lernstift.data/WacomRecordings'
 
 SRC_DIR = sys.argv[1]
 WACOM_DIR = SRC_DIR + '/WacomRecordings'
-print(WACOM_DIR)
+TABLET_DIR = SRC_DIR + '/TabletRecordings/O2Collection'
+PRES_DIR= SRC_DIR + '/Pressure'
 
-# data sheet's destination
+# Data sheet's destination
 W_STAT = 'writer_statistics.md'
+CSV_W = 'writer_wacom.csv'
+CSV_P = 'writer_pressure.csv'
+CSV_T = 'writer_tablet.csv'
 
-s = Statistic(WACOM_DIR)
-printer = Printer(s)
+s_wacom = Statistic(WACOM_DIR)
+s_tablet = Statistic(TABLET_DIR)
+s_pressure = Statistic(PRES_DIR)
+
+p_wacom = Printer(s_wacom)
+p_pressure = Printer(s_pressure)
+p_tablet = Printer(s_tablet)
 
 print("! Generating the data sheet, please do not interrupt !")
-printer.print_to(W_STAT)
-print("√ Complete! The data sheet " + W_STAT + " was created √")
+p_wacom.print_csv_to(CSV_W)
+p_pressure.print_csv_to(CSV_P)
+p_tablet.print_csv_to(CSV_T)
+#print("√ Complete! The data sheet " + W_STAT + " was created √")

@@ -68,17 +68,13 @@ class Writer:
     def get_letters_tablet(self):
         files = self.get_letters_files()
         all_letters = []
-        c = 0
         for f in files:
             j = open(f)
             j_data = json.load(j)
             for p in j_data:
-                if type(p) is dict:
-                    if len(p['label']) == 1:
-                        all_letters.append(p['label'])
-                    if not p['label'].isalpha():
-                        if len(p['label']) == 2: if not p['label'][0] == ' ':
-                                all_letters.append(p['label'])
+                print(type(p))
+                print(p[0])
+                #all_letters.append(p["label"])
         l = sorted(all_letters, key=str.lower)
         counter = collections.Counter(l)
         return counter
