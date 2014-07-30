@@ -77,7 +77,8 @@ class Writer:
                     if len(p['label']) == 1:
                         all_letters.append(p['label'])
                     if not p['label'].isalpha():
-                        if len(p['label']) == 2: if not p['label'][0] == ' ':
+                        if len(p['label']) == 2: 
+                            if not p['label'][0] == ' ':
                                 all_letters.append(p['label'])
         l = sorted(all_letters, key=str.lower)
         counter = collections.Counter(l)
