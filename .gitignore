@@ -3,3 +3,5 @@ wacom_data.txt
 wacom_statistics.md
 wacom_word_statistics.md
 data_sheet_py/writer_statistics.md
+data_sheet_py/*js
+data_sheet_py/*csv

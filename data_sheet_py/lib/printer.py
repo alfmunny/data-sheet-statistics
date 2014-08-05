@@ -52,3 +52,59 @@ class Printer:
                 f.write(line_header + ', ' + letter + ', ' + str(letters[letter]))
                 f.write('\n')
         return os.path.isfile(filepath)
+
+    def print_js_to(self, filepath):
+        writers = self.statistic.get_writers()
+        if os.path.isfile(filepath):
+            os.remove(filepath)
+        f = open(filepath, 'a')
+        if 'Pressure' in self.statistic.root:
+            tail = "Pressure"
+            f.write('var Pressure = [')
+        if 'Wacom'in self.statistic.root:
+            tail = "Wacom"
+            f.write('var Wacom = [')
+        if 'Tablet'in self.statistic.root:
+            tail = "Tablet"
+            f.write('var Tablet = [')
+        counter_w = 1
+        for writer in writers:
+            w = Writer(writer, self.statistic.root)
+            if 'Pressure' in self.statistic.root:
+                letters = w.get_letters_pressure()
+            if 'Wacom'in self.statistic.root:
+                letters = w.get_letters()
+            if 'Tablet'in self.statistic.root:
+                letters = w.get_letters_tablet()
+            to_sort = []
+
+            f.write('{\nid: \'' + writer + '\', ')
+            f.write('\n')
+            f.write('labels: [')
+            for i in letters.keys():
+                to_sort.append(i)
+            sorted_list = sorted(to_sort)
+            counter_l = 1 
+
+            for letter in sorted_list:
+                f.write('{\nid: "' + letter + '",' + '\n'+ 'repeat: ' + str(letters[letter]['sum']) + ',\n' + 'files: [')
+                counter_f = 1
+                for src in letters[letter].keys():
+                    if not 'sum' in src:
+                        f.write('{\n' + 'id: \'' + src + '\',' + '\n' + 'repeat:' + str(letters[letter][src]) + '\n}')
+                        if counter_f != len(letters[letter]):
+                            f.write(',')
+                    counter_f += 1
+                f.write(']\n}')
+                if not counter_l == len(sorted_list):
+                    f.write(',')
+                counter_l += 1
+            f.write(']}')
+            if not counter_w == len(writers):
+                f.write(',')
+            counter_w += 1
+        f.write('];')
+        f.write('\n')
+        f.write('export default ' + tail + ';')
+        f.close()
+        return os.path.isfile(filepath)

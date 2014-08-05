@@ -26,60 +26,100 @@ class Writer:
         for dirname, dirnames, filenames in os.walk(self.folder + '/' + self.name):
             for filename in filenames:
                 if "letters.json" in filename:
-                    self.letters_files.append((os.path.join(dirname, filename)))
+                    if not "delay_corrected" in dirname:
+                        self.letters_files.append((os.path.join(dirname, filename)))
         return self.letters_files
 
     def get_letters(self):
         files = self.get_letters_files()
         all_letters = []
+        letters_info = {}
+        full_info = {}
         for f in files:
+            letters_one_file = []
             j = open(f)
             j_data = json.load(j)
             for p in j_data:
                 p_data = json.loads(p)
-                if len(p_data['label']) == 1:
-                    all_letters.append(p_data['label'])
-                if not p_data['label'].isalpha():
-                    if len(p_data['label']) == 2: 
-                        if not p_data['label'][0] == ' ':
-                            all_letters.append(p_data['label'])
+                letters_one_file = self.filter(p_data, letters_one_file)
+                all_letters = self.filter(p_data, all_letters)
+            list = sorted(letters_one_file, key=str.lower)
+            counter = collections.Counter(letters_one_file)
+            letters_info[os.path.basename(f)] = counter
         list = sorted(all_letters, key=str.lower)
         counter = collections.Counter(list)
-        return counter 
+        for c in counter.keys():
+            full_info[c] = {}
+            full_info[c]['sum'] = counter[c]
+            for f in letters_info.keys():
+                for letter in letters_info[f].keys():
+                    if c == letter:
+                        full_info[c][f] = letters_info[f][letter]
+                        break
+        return full_info
         
     def get_letters_pressure(self):
         files = self.get_segmented_files()
         all_letters = []
-        #print(files)
+        letters_info = {}
+        full_info = {}
         for f in files:
+            letters_one_file = []
             j = open(f)
             j_data = json.load(j)
             for p in j_data:
-                if len(p['label']) == 1:
-                    all_letters.append(p['label'])
-                if not p['label'].isalpha():
-                    if len(p['label']) == 2: 
-                        if not p['label'][0] == ' ':
-                            all_letters.append(p['label'])
+                all_letters = self.filter(p, all_letters)
+                letters_one_file = self.filter(p, letters_one_file)
+            list = sorted(letters_one_file, key=str.lower)
+            counter = collections.Counter(letters_one_file)
+            letters_info[os.path.basename(f)] = counter
         list = sorted(all_letters, key=str.lower)
         counter = collections.Counter(list)
-        return counter
+        for c in counter.keys():
+            full_info[c] = {}
+            full_info[c]['sum'] = counter[c]
+            for f in letters_info.keys():
+                for letter in letters_info[f].keys():
+                    if c == letter:
+                        full_info[c][f] = letters_info[f][letter]
+                        break
+        return full_info 
 
     def get_letters_tablet(self):
+        letters_info = {}
+        full_info = {}
         files = self.get_letters_files()
         all_letters = []
-        c = 0
         for f in files:
+            letters_one_file = []
             j = open(f)
             j_data = json.load(j)
             for p in j_data:
                 if type(p) is dict:
-                    if len(p['label']) == 1:
-                        all_letters.append(p['label'])
-                    if not p['label'].isalpha():
-                        if len(p['label']) == 2: 
-                            if not p['label'][0] == ' ':
-                                all_letters.append(p['label'])
-        l = sorted(all_letters, key=str.lower)
-        counter = collections.Counter(l)
-        return counter
+                    all_letters = self.filter(p, all_letters)
+                    letters_one_file = self.filter(p, letters_one_file)
+            list = sorted(letters_one_file, key=str.lower)
+            counter = collections.Counter(letters_one_file)
+            letters_info[os.path.basename(f)] = counter
+        list = sorted(all_letters, key=str.lower)
+        counter = collections.Counter(list)
+
+        for c in counter.keys():
+            full_info[c] = {}
+            full_info[c]['sum'] = counter[c]
+            for f in letters_info.keys():
+                for letter in letters_info[f].keys():
+                    if c == letter:
+                        full_info[c][f] = letters_info[f][letter]
+                        break
+        return full_info 
+
+    def filter(self, dic, lis):
+        if len(dic['label']) == 1:
+            if not dic['label'][0] == ' ':
+                lis.append(dic['label'])
+        if not dic['label'].isalpha():
+            if len(dic['label']) == 2: 
+                if not dic['label'][0] == ' ':
+                    lis.append(dic['label'])
+        return lis

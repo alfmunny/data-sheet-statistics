@@ -17,7 +17,4 @@ Now it's only for Wacom data
 ## TODOs
 
 1. Add the function to create data sheet according to each letter.
-2. Add the function to create data sheet according to writer with writer's timestamp
-2. Dealing with the Tablet data.
-
 
