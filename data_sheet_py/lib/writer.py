@@ -119,5 +119,3 @@ class Writer:
                         full_info[c][f] = letters_info[f][letter]
                         break
         return full_info
-
-
