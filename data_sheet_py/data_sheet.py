@@ -35,14 +35,13 @@ def main(argv=sys.argv):
     w_wacom = Writer('Yuanchen', WACOM_DIR)
     print("! Generating the data sheet, please do not interrupt !")
 
-    p_wacom.print_csv_to(CSV_W)
-    p_pressure.print_csv_to(CSV_P)
-    p_tablet.print_csv_to(CSV_T) 
+   # p_wacom.print_csv_to(CSV_W)
+   # p_pressure.print_csv_to(CSV_P)
+   # p_tablet.print_csv_to(CSV_T) 
     
-    p_wacom.print_js_to(JS_W)
+#    p_wacom.print_js_to(JS_W)
     p_pressure.print_js_to(JS_P)
-    p_tablet.print_js_to(JS_T) 
-    
+#    p_tablet.print_js_to(JS_T) 
     print("√ Complete! The data sheets were created √")
 if __name__ == "__main__":
     main(sys.argv)

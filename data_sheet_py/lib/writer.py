@@ -61,13 +61,19 @@ class Writer:
         for f in files:
             letters_one_file = []
             j = open(f)
-            j_data = json.load(j)
+            try:
+                j_data = json.load(j)
+            except ValueError:  # includes simplejson.decoder.JSONDecodeError
+                print("Value Error in"),
+                print(f)
+                continue
             for p in j_data:
                 all_letters = self.filter(p, all_letters)
                 letters_one_file = self.filter(p, letters_one_file)
             list = sorted(letters_one_file, key=str.lower)
             counter = collections.Counter(letters_one_file)
             letters_info[f] = counter
+
         list = sorted(all_letters, key=str.lower)
         counter = collections.Counter(list)
 
